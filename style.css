@@ -1,0 +1,256 @@
+/* ===================================================== */
+/* CONTOH STRUKTUR CSS UNTUK ADMIN DASHBOARD RESPONSIVE */
+/* ===================================================== */
+
+/* --- Variabel Warna & Font (Sesuaikan) --- */
+:root {
+    --sidebar-bg: #2c3e50; /* Warna sidebar */
+    --sidebar-text-color: #ecf0f1; /* Warna teks sidebar */
+    --sidebar-active-bg: #3498db; /* Warna menu aktif */
+    --sidebar-hover-bg: #34495e; /* Warna menu hover */
+    --header-bg: #ffffff; /* Warna header konten */
+    --header-text-color: #333; /* Warna teks header */
+    --content-bg: #ecf0f5; /* Warna latar belakang area konten */
+    --border-color: #d2d6de; /* Warna border */
+    --star-color: #f39c12; /* Warna bintang rating */
+    --link-color: #3498db;
+    /* Tambahkan variabel lain jika perlu */
+}
+
+/* --- Reset & Basic Styling --- */
+body.admin-body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Contoh Font */
+    background-color: var(--content-bg);
+    font-size: 14px; /* Ukuran font dasar */
+    color: #333;
+}
+
+* {
+    box-sizing: border-box; /* Perhitungan box model yang lebih mudah */
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Layout Utama (Flexbox) --- */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh; /* Wrapper setidaknya setinggi layar */
+}
+
+/* --- Styling Sidebar (Layar Besar & Dasar) --- */
+.admin-sidebar {
+    width: 240px;       /* Lebar sidebar */
+    flex-shrink: 0;     /* Sidebar tidak menyusut */
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text-color);
+    height: 100vh;      /* Sidebar setinggi layar */
+    position: sticky;   /* Sidebar tetap di tempat saat konten di-scroll */
+    top: 0;
+    transition: left 0.3s ease-in-out; /* Transisi untuk efek slide responsif */
+    overflow-y: auto;   /* Scroll internal jika menu panjang */
+    z-index: 1010;      /* Di atas konten tapi di bawah overlay/modal */
+}
+
+.sidebar-header {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Garis pemisah */
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px; /* Padding menu */
+    color: var(--sidebar-text-color);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 0.9rem; /* Ukuran font menu */
+}
+
+.sidebar-nav li a i {
+    margin-right: 12px; /* Jarak ikon ke teks */
+    width: 20px;
+    text-align: center;
+    font-size: 1.1em; /* Ukuran ikon sedikit lebih besar */
+}
+
+.sidebar-nav li a:hover {
+    background-color: var(--sidebar-hover-bg);
+    color: #fff;
+    text-decoration: none;
+}
+
+.sidebar-nav li.active > a { /* Style untuk menu aktif */
+    background-color: var(--sidebar-active-bg);
+    color: #fff;
+    font-weight: 600; /* Sedikit tebal */
+}
+
+/* --- Styling Konten Utama (Layar Besar & Dasar) --- */
+.admin-content {
+    flex-grow: 1; /* Konten mengisi sisa ruang */
+
+    /* == PERCOBAAN PERBAIKAN UKURAN KONTEN == */
+    /* Coba hilangkan/komentari 2 baris ini jika konten Anda aneh ukurannya */
+    /* height: 100vh; */
+    /* overflow-y: auto; */
+    /* ======================================== */
+
+    /* Jika Anda menghapus height & overflow di atas, mungkin body perlu scroll */
+    /* Jika Anda tetap ingin konten saja yg scroll, Anda mungkin perlu atur elemen .content-area */
+}
+
+.admin-content-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px; /* Padding header */
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky; /* Header tetap terlihat saat konten scroll */
+    top: 0;
+    z-index: 1000;
+    min-height: 50px; /* Tinggi minimal header */
+}
+
+.admin-content-header h1 {
+    margin: 0;
+    flex-grow: 1;
+    font-size: 1.4rem; /* Ukuran judul header */
+    color: var(--header-text-color);
+}
+
+.admin-info {
+    margin-left: auto; /* Dorong info user ke kanan */
+    font-size: 0.9rem;
+    color: #555;
+}
+.admin-info i {
+    margin-right: 5px;
+}
+
+.content-area {
+    padding: 25px; /* Padding area konten utama */
+    /* Jika Anda ingin membatasi lebar konten di layar sangat besar */
+    /* max-width: 1400px; */
+    /* margin: 0 auto; */ /* Untuk menengahkan jika pakai max-width */
+}
+
+/* --- Tombol Toggle Sidebar & Overlay (Dasar) --- */
+.sidebar-toggle-button {
+    display: none; /* Sembunyikan di layar besar */
+    background: none;
+    border: none;
+    font-size: 1.6rem; /* Ukuran ikon hamburger */
+    color: var(--header-text-color);
+    cursor: pointer;
+    padding: 0 10px;
+    margin-right: 15px;
+    line-height: 1;
+}
+
+.sidebar-overlay {
+    display: none; /* Sembunyikan di layar besar */
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Overlay gelap */
+    z-index: 1040; /* Di bawah sidebar, di atas konten */
+}
+
+/* --- Media Query untuk Responsif (Layar Kecil) --- */
+@media (max-width: 768px) { /* Sesuaikan breakpoint jika perlu */
+    .admin-sidebar {
+        position: fixed;    /* Harus fixed untuk overlay */
+        left: -250px;       /* Sembunyikan di luar layar (sesuaikan jika lebar sidebar beda) */
+        top: 0; bottom: 0;
+        z-index: 1050;      /* Di atas overlay */
+        /* transisi sudah ada di style default */
+    }
+
+    /* State saat sidebar terbuka */
+    .admin-sidebar.open {
+        left: 0; /* Munculkan sidebar */
+        box-shadow: 3px 0 15px rgba(0,0,0,0.2); /* Bayangan */
+    }
+
+    .sidebar-toggle-button {
+        display: block; /* Tampilkan tombol hamburger */
+    }
+
+    /* Tampilkan overlay saat sidebar terbuka */
+    .admin-sidebar.open + .sidebar-overlay { 
+         display: block;
+    }
+
+    .admin-content {
+       /* Biasanya tidak perlu banyak diubah di sini, kecuali padding/margin header */
+    }
+    .admin-content-header {
+        /* Mungkin perlu padding lebih kecil */
+         padding: 10px 15px;
+    }
+    .admin-content-header h1 {
+        font-size: 1.2rem; /* Kecilkan judul */
+    }
+    .content-area {
+        padding: 15px; /* Kecilkan padding konten */
+    }
+}
+
+/* --- Style untuk Komponen Lain (Pesan, Form, Tabel, Modal, dll) --- */
+/* Salin semua style CSS yang sudah Anda buat atau gunakan sebelumnya untuk: */
+/* .pesan, .form-container, .form-group, .btn, table, th, td, */
+/* .table-responsive, .rating-input, .rating-stars, .status-hadir, .status-belum, */
+/* .modal, .modal-content, .modal-close-btn, .qr-code-display, #qrcode-container, */
+/* .rating-summary, .rating-chart-container, .rating-list-container, */
+/* #qr-reader, #qr-reader-results, .status-baru, .status-diproses, dll. */
+/* Pastikan style ini tidak konflik dengan layout flexbox/responsif di atas */
+
+/* Contoh beberapa style penting (pastikan Anda punya ini): */
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+.table-responsive {
+    overflow-x: auto;
+    margin-top: 15px;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 10px 12px; /* Padding sel tabel */
+    text-align: left;
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+th {
+    background-color: #f8f9fa; /* Latar header tabel */
+    font-weight: 600;
+}
+/* ... dan seterusnya ... */
