@@ -83,6 +83,7 @@ a:hover {
     color: var(--sidebar-text-color);
     transition: background-color 0.2s ease, color 0.2s ease;
     font-size: 0.9rem; /* Ukuran font menu */
+    text-decoration: none; /* Pastikan tidak ada underline */
 }
 
 .sidebar-nav li a i {
@@ -107,15 +108,9 @@ a:hover {
 /* --- Styling Konten Utama (Layar Besar & Dasar) --- */
 .admin-content {
     flex-grow: 1; /* Konten mengisi sisa ruang */
-
-    /* == PERCOBAAN PERBAIKAN UKURAN KONTEN == */
-    /* Coba hilangkan/komentari 2 baris ini jika konten Anda aneh ukurannya */
+    /* Jika Anda ingin body yang scroll, hapus/komentari height & overflow */
     /* height: 100vh; */
     /* overflow-y: auto; */
-    /* ======================================== */
-
-    /* Jika Anda menghapus height & overflow di atas, mungkin body perlu scroll */
-    /* Jika Anda tetap ingin konten saja yg scroll, Anda mungkin perlu atur elemen .content-area */
 }
 
 .admin-content-header {
@@ -148,9 +143,6 @@ a:hover {
 
 .content-area {
     padding: 25px; /* Padding area konten utama */
-    /* Jika Anda ingin membatasi lebar konten di layar sangat besar */
-    /* max-width: 1400px; */
-    /* margin: 0 auto; */ /* Untuk menengahkan jika pakai max-width */
 }
 
 /* --- Tombol Toggle Sidebar & Overlay (Dasar) --- */
@@ -199,12 +191,8 @@ a:hover {
          display: block;
     }
 
-    .admin-content {
-       /* Biasanya tidak perlu banyak diubah di sini, kecuali padding/margin header */
-    }
     .admin-content-header {
-        /* Mungkin perlu padding lebih kecil */
-         padding: 10px 15px;
+        padding: 10px 15px;
     }
     .admin-content-header h1 {
         font-size: 1.2rem; /* Kecilkan judul */
@@ -214,43 +202,140 @@ a:hover {
     }
 }
 
-/* --- Style untuk Komponen Lain (Pesan, Form, Tabel, Modal, dll) --- */
-/* Salin semua style CSS yang sudah Anda buat atau gunakan sebelumnya untuk: */
-/* .pesan, .form-container, .form-group, .btn, table, th, td, */
-/* .table-responsive, .rating-input, .rating-stars, .status-hadir, .status-belum, */
-/* .modal, .modal-content, .modal-close-btn, .qr-code-display, #qrcode-container, */
-/* .rating-summary, .rating-chart-container, .rating-list-container, */
-/* #qr-reader, #qr-reader-results, .status-baru, .status-diproses, dll. */
-/* Pastikan style ini tidak konflik dengan layout flexbox/responsif di atas */
+/* --- Style untuk Komponen Lain (Pesan, Form, Tabel, Modal Umum, dll) --- */
+/* Pastikan Anda sudah memiliki style dasar untuk komponen ini */
+.pesan { padding: 10px 15px; margin-bottom: 15px; border-radius: 4px; border: 1px solid transparent;}
+.pesan.sukses { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+.pesan.error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+.pesan.warning { background-color: #fff3cd; border-color: #ffeeba; color: #856404; }
+.form-container { background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 20px; }
+.form-group { margin-bottom: 15px; } 
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; } 
+.form-group input[type="text"], .form-group input[type="password"], .form-group input[type="email"], .form-group input[type="datetime-local"], .form-group textarea, .form-group select, .form-group input[type="file"] { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 0.9rem;} 
+.form-group textarea { resize: vertical; min-height: 80px;} 
+.form-group small { font-size: 0.8em; color: #666; margin-top: 3px; display: block;}
+.btn { padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; text-decoration: none; display: inline-block; text-align: center; transition: background-color 0.2s ease;} 
+.btn-utama { background-color: #007bff; color: white; } .btn-utama:hover { background-color: #0056b3; } 
+.btn-secondary { background-color: #6c757d; color: white; } .btn-secondary:hover { background-color: #5a6268; } 
+.btn-success { background-color: #28a745; color: white; } .btn-success:hover { background-color: #218838; } 
+.btn-danger, .btn-hapus { background-color: #dc3545; color: white; } .btn-danger:hover, .btn-hapus:hover { background-color: #c82333; } 
+.btn-warning { background-color: #ffc107; color: #212529; } .btn-warning:hover { background-color: #e0a800; } 
+.btn-sm { padding: 4px 8px; font-size: 0.8rem; } 
+.table-responsive { overflow-x: auto; margin-top: 15px; background-color: #fff; border: 1px solid var(--border-color); border-radius: 4px; } 
+table { width: 100%; border-collapse: collapse; } 
+th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: middle; font-size: 0.9rem; } 
+th { background-color: #f8f9fa; font-weight: 600; } 
+tbody tr:nth-child(odd) { background-color: #f9f9f9; }
+.rating-input { display: flex; flex-direction: row-reverse; justify-content: flex-end; } 
+.rating-input input[type="radio"] { display: none; } 
+.rating-input label { color: #ddd; font-size: 1.8em; cursor: pointer; padding: 0 0.1em; } 
+.rating-input input[type="radio"]:checked ~ label, .rating-input label:hover, .rating-input label:hover ~ label { color: var(--star-color); } 
+.rating-stars i, .rating-stars-small i { color: var(--star-color); } .rating-stars-small i { font-size: 0.9em; } 
+.status-hadir { color: green; font-weight: bold; } .status-belum { color: grey; } 
+.table-responsive th:last-child, .table-responsive td:last-child { width: auto; white-space: nowrap; text-align: center;} 
+.modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); padding-top: 50px; } 
+.modal-content { background-color: #fefefe; margin: 5% auto; padding: 25px; border: 1px solid #aaa; width: 90%; max-width: 550px; text-align: center; border-radius: 8px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.2); } 
+.modal-content h3 { margin-top: 0; margin-bottom: 15px; } 
+.modal-close-btn { color: #aaa; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; line-height: 1; } 
+.modal-close-btn:hover, .modal-close-btn:focus { color: black; text-decoration: none; } 
+.status-baru { padding: 3px 6px; background-color: #ffc107; color: #333; border-radius: 4px; font-size: 0.85em; display: inline-block;} 
+.status-diproses { padding: 3px 6px; background-color: #0dcaf0; color: #fff; border-radius: 4px; font-size: 0.85em; display: inline-block;} 
+.status-selesai { padding: 3px 6px; background-color: #198754; color: #fff; border-radius: 4px; font-size: 0.85em; display: inline-block;} 
+.status-ditolak { padding: 3px 6px; background-color: #dc3545; color: #fff; border-radius: 4px; font-size: 0.85em; display: inline-block;} 
 
-/* Contoh beberapa style penting (pastikan Anda punya ini): */
-.form-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    margin-top: 20px;
+/* ========================================================= */
+/* === STYLE BARU / MODIFIKASI UNTUK POPUP ANTRIAN === */
+/* ========================================================= */
+
+#antrianPopupModal .modal-content {
+    text-align: center; /* Konten rata tengah secara umum */
+    padding: 30px 35px; /* Padding lebih besar */
+    max-width: 450px; /* Sedikit lebih kecil mungkin? Sesuaikan */
+    border-radius: 10px; /* Sudut lebih tumpul */
+    border: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15); /* Bayangan lebih halus */
 }
-.table-responsive {
-    overflow-x: auto;
-    margin-top: 15px;
-    background-color: #fff;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-th, td {
-    border: 1px solid var(--border-color);
-    padding: 10px 12px; /* Padding sel tabel */
-    text-align: left;
-    vertical-align: middle;
-    font-size: 0.9rem;
-}
-th {
-    background-color: #f8f9fa; /* Latar header tabel */
+
+#antrianPopupModal h3 {
+    font-size: 1.4em; /* Sedikit lebih besar */
+    color: #28a745; /* Warna hijau untuk sukses */
+    margin-bottom: 15px;
     font-weight: 600;
 }
-/* ... dan seterusnya ... */
+
+#antrianPopupModal h3 i {
+    margin-right: 10px;
+    vertical-align: baseline; /* Coba baseline untuk alignment ikon */
+}
+
+/* Target teks "Nomor Antrian Tamu Hari Ini:" */
+#antrianPopupModal p:first-of-type { 
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 1em;
+    color: #555;
+}
+
+#antrianPopupModal .antrian-number {
+    font-size: 4.5em;  /* Nomor antrian SANGAT BESAR */
+    font-weight: bold;
+    color: #0056b3;     /* Warna biru primer yang kuat */
+    margin: 10px 0 25px 0; /* Jarak atas/bawah lebih besar */
+    line-height: 1.1;
+    display: block; /* Pastikan block agar margin bekerja */
+    border-top: 1px solid #eee; /* Garis pemisah tipis di atas */
+    border-bottom: 1px solid #eee; /* Garis pemisah tipis di bawah */
+    padding: 15px 0; /* Padding di dalam border */
+}
+
+#antrianPopupModal .detail-tamu {
+    font-size: 0.9em;
+    color: #666; /* Warna sedikit lebih terang */
+    margin-top: 20px;
+    text-align: left; /* Detail rata kiri */
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    width: 100%; /* Pastikan lebar penuh */
+}
+
+#antrianPopupModal .detail-tamu p {
+    margin: 6px 0; /* Spasi antar baris detail */
+    display: flex; /* Gunakan flex untuk alignment label-value */
+    justify-content: space-between; /* Label kiri, value kanan */
+}
+
+#antrianPopupModal .detail-tamu strong {
+    /* display: inline-block; */ /* Tidak perlu lagi jika pakai flex */
+    /* width: 80px; */ /* Tidak perlu lagi */
+    font-weight: 600; /* Sedikit tebal */
+    margin-right: 10px; /* Jarak antara label dan value */
+    color: #444;
+}
+#antrianPopupModal .detail-tamu span {
+    text-align: right; /* Value rata kanan */
+    flex-grow: 1; /* Biarkan value mengisi sisa ruang */
+    word-break: break-word; /* Agar teks panjang bisa wrap */
+}
+
+
+#antrianPopupModal .antrianPopup-close-btn {
+    margin-top: 30px; /* Jarak tombol OK lebih jauh */
+    padding: 10px 25px; /* Tombol OK lebih besar */
+    font-size: 1em;
+}
+
+/* Override style dasar modal jika perlu */
+#antrianPopupModal .modal-close-btn {
+    top: 15px; /* Sesuaikan posisi tombol close (X) */
+    right: 15px;
+}
+
+/* ========================================================= */
+/* === AKHIR STYLE BARU / MODIFIKASI UNTUK POPUP ANTRIAN === */
+/* ========================================================= */
+
+
+/* --- Style untuk komponen spesifik lainnya --- */
+/* (Misal: #editModal, #qrConfirmModal, #detailPengaduanModal, dll) */
+/* Pastikan style modal lain tidak konflik */
+/* ... */

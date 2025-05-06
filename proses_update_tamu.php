@@ -1,114 +1,71 @@
 <?php
 session_start();
-header('Content-Type: application/json'); // Output sebagai JSON
-
+header('Content-Type: application/json');
 require_once 'koneksi.php';
 
-// Respon default
-$response = ['success' => false, 'message' => 'Terjadi kesalahan.'];
+$response = ['success' => false, 'message' => 'Gagal update data.'];
 
-// 1. Cek Login Admin
 if (!isset($_SESSION['id_petugas'])) {
-    $response['message'] = 'Akses ditolak. Silakan login.';
-    echo json_encode($response);
-    exit();
+    $response['message'] = 'Akses ditolak. Silakan login ulang.';
+    echo json_encode($response); exit();
 }
 
-// 2. Cek Metode POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-     $response['message'] = 'Metode request tidak valid.';
-     echo json_encode($response);
-     exit();
-}
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $input = file_get_contents('php://input');
+    $data = json_decode($input, true);
 
-// 3. Ambil dan Validasi Data Input
-// Ambil dari body JSON atau form data (sesuaikan dengan fetch di JS)
-// Contoh ini asumsi data dikirim sebagai JSON
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
+    $id_tamu = $data['id_tamu'] ?? null;
+    $nama = trim($data['nama'] ?? '');
+    $alamat = trim($data['alamat'] ?? '');
+    $keperluan = trim($data['keperluan'] ?? ''); // Sekarang dari select
+    $pekerjaan = trim($data['pekerjaan'] ?? NULL); // Field BARU
+    $no_telp = trim($data['no_telp'] ?? '');
+    $rating = isset($data['rating']) && is_numeric($data['rating']) ? intval($data['rating']) : NULL; // Field BARU
 
-// Validasi ID
-if (!isset($data['id_tamu']) || !filter_var($data['id_tamu'], FILTER_VALIDATE_INT)) {
-    $response['message'] = 'ID Tamu tidak valid.';
-    echo json_encode($response);
-    exit();
-}
-$id_tamu = (int)$data['id_tamu'];
-
-// Validasi Nama (Wajib)
-if (!isset($data['nama']) || trim($data['nama']) === '') {
-    $response['message'] = 'Nama Tamu wajib diisi.';
-    echo json_encode($response);
-    exit();
-}
-$nama = mysqli_real_escape_string($koneksi, trim($data['nama']));
-
-// Ambil data lain (opsional)
-$alamat = isset($data['alamat']) ? mysqli_real_escape_string($koneksi, trim($data['alamat'])) : NULL;
-$keperluan = isset($data['keperluan']) ? mysqli_real_escape_string($koneksi, trim($data['keperluan'])) : NULL;
-$no_telp = isset($data['no_telp']) ? mysqli_real_escape_string($koneksi, trim($data['no_telp'])) : NULL;
-
-// Validasi Rating (jika ada, harus 1-5 atau NULL)
-$rating = NULL;
-if (isset($data['rating']) && $data['rating'] !== '' && $data['rating'] !== NULL) {
-    $rating_input = intval($data['rating']);
-    if ($rating_input >= 1 && $rating_input <= 5) {
-        $rating = $rating_input;
-    } else {
-        $response['message'] = 'Rating tidak valid (harus 1-5 atau kosong).';
-        echo json_encode($response);
-        exit();
+    if (empty($id_tamu) || !is_numeric($id_tamu) || empty($nama) || empty($keperluan)) {
+        $response['message'] = 'ID Tamu, Nama, dan Keperluan tidak boleh kosong.';
+        echo json_encode($response); exit();
     }
-}
+    if ($rating !== NULL && ($rating < 1 || $rating > 5)) {
+        $response['message'] = 'Rating tidak valid.';
+        echo json_encode($response); exit();
+    }
+    if (!$koneksi) { 
+        $response['message'] = 'Koneksi database gagal.';
+        echo json_encode($response); exit();
+    }
 
+    $sql = "UPDATE tamu SET nama = ?, alamat = ?, keperluan = ?, pekerjaan = ?, no_telp = ?, rating = ? 
+            WHERE id = ?";
+    $stmt = mysqli_prepare($koneksi, $sql);
 
-// 4. Siapkan Query UPDATE
-$sql_update = "UPDATE tamu SET
-                    nama = ?,
-                    alamat = ?,
-                    keperluan = ?,
-                    no_telp = ?,
-                    rating = ?
-                WHERE id = ?";
+    if ($stmt) {
+        // Perhatikan urutan dan tipe data: s (string), s, s, s (pekerjaan), s, i (rating), i (id)
+        mysqli_stmt_bind_param($stmt, "sssssii", 
+            $nama, $alamat, $keperluan, $pekerjaan, $no_telp, $rating, $id_tamu
+        );
 
-$stmt_update = mysqli_prepare($koneksi, $sql_update);
-
-if ($stmt_update) {
-    // Bind parameter (s=string, i=integer). Perhatikan urutan dan tipe
-    mysqli_stmt_bind_param($stmt_update, "ssssii",
-        $nama,
-        $alamat,
-        $keperluan,
-        $no_telp,
-        $rating, // Kirim NULL jika tidak ada rating
-        $id_tamu
-    );
-
-    if (mysqli_stmt_execute($stmt_update)) {
-        // Cek apakah ada baris yang terpengaruh
-        if (mysqli_stmt_affected_rows($stmt_update) > 0) {
-            $response['success'] = true;
-            $response['message'] = 'Data tamu berhasil diperbarui.';
+        if (mysqli_stmt_execute($stmt)) {
+            if (mysqli_stmt_affected_rows($stmt) > 0) {
+                $response['success'] = true;
+                $response['message'] = 'Data tamu berhasil diperbarui.';
+                $_SESSION['admin_message'] = 'Data tamu ID: ' . $id_tamu . ' berhasil diperbarui.';
+                $_SESSION['admin_message_type'] = 'sukses';
+            } else {
+                $response['message'] = 'Tidak ada perubahan data atau ID tamu tidak ditemukan.';
+                $response['success'] = true; // Anggap sukses jika tidak ada error, mungkin data sama
+            }
         } else {
-            // Query jalan tapi tidak ada yg berubah (mungkin data sama atau ID tidak ada)
-            $response['success'] = true; // Anggap sukses jika tidak ada error SQL
-            $response['message'] = 'Tidak ada perubahan data atau ID tidak ditemukan.';
+            $response['message'] = 'Gagal eksekusi update: ' . mysqli_stmt_error($stmt);
         }
+        mysqli_stmt_close($stmt);
     } else {
-        // Gagal eksekusi
-        $response['message'] = 'Gagal mengupdate database: ' . htmlspecialchars(mysqli_stmt_error($stmt_update));
+        $response['message'] = 'Gagal prepare statement: ' . mysqli_error($koneksi);
     }
-    mysqli_stmt_close($stmt_update);
-} else {
-    // Gagal siapkan query
-    $response['message'] = 'Gagal menyiapkan query update: ' . htmlspecialchars(mysqli_error($koneksi));
-}
-
-if (isset($koneksi) && $koneksi instanceof mysqli) {
     mysqli_close($koneksi);
+} else {
+    $response['message'] = 'Metode request tidak valid.';
 }
-
-// Kembalikan respon JSON
 echo json_encode($response);
 exit();
 ?>
