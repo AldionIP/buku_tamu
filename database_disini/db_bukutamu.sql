@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2025 at 05:16 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jun 16, 2025 at 09:10 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -125,7 +125,9 @@ INSERT INTO `tamu` (`id`, `nama`, `alamat`, `keperluan`, `pekerjaan`, `no_telp`,
 (29, 'diongsgdghdfhdfhfdhfd', 'gdgsdgsg', 'Kolaborasi', NULL, '8658585', '', 0, NULL, NULL, 9, '2025-05-06', '2025-05-06 10:36:12'),
 (30, 'testinggggggggggggggg', 'gdgsdgsg', 'Belajar', NULL, '8658585', '', 0, NULL, NULL, 10, '2025-05-06', '2025-05-06 10:49:14'),
 (31, 'testinggggggggggggggg', 'gdgsdgsg', 'Belajar', NULL, '8658585', '', 0, NULL, NULL, 11, '2025-05-06', '2025-05-06 11:42:26'),
-(32, 'testinggggggggggggggg', 'jhgjhgjhv', 'Belajar', NULL, '8658585', '', 0, NULL, NULL, 12, '2025-05-06', '2025-05-06 11:50:39');
+(32, 'testinggggggggggggggg', 'jhgjhgjhv', 'Belajar', NULL, '8658585', '', 0, NULL, NULL, 12, '2025-05-06', '2025-05-06 11:50:39'),
+(33, 'testing', 'tes', 'Meeting', NULL, '8658585', '', 0, NULL, NULL, 1, '2025-05-10', '2025-05-10 10:24:04'),
+(34, 'Dion', 'mbc', 'Rapat/Pertemuan', NULL, '089564534242', '', 0, NULL, NULL, 1, '2025-06-14', '2025-06-14 00:55:58');
 
 --
 -- Indexes for dumped tables
@@ -172,7 +174,7 @@ ALTER TABLE `petugas`
 -- AUTO_INCREMENT for table `tamu`
 --
 ALTER TABLE `tamu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Constraints for dumped tables
