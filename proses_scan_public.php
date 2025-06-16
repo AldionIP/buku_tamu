@@ -1,67 +1,55 @@
 <?php
-session_start(); 
-require_once 'koneksi.php'; 
+// TANPA session_start() karena ini diakses publik
+require_once 'koneksi.php';
 
 header('Content-Type: application/json');
-$response = ['success' => false, 'message' => 'Kesalahan pemrosesan QR.'];
+$response = ['success' => false, 'message' => 'Gagal memproses QR.'];
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') { /* ... Handle error metode ... */ exit(); }
-if (!$koneksi) { /* ... Handle error koneksi ... */ exit(); }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $response['message'] = 'Metode request tidak valid.';
+    echo json_encode($response);
+    exit();
+}
+
+if (!$koneksi) {
+    $response['message'] = 'Koneksi database gagal.';
+    echo json_encode($response);
+    exit();
+}
 
 $input = file_get_contents('php://input');
 $data = json_decode($input, true);
+$guestId = $data['guestId'] ?? null;
 
-if (!isset($data['guestId']) || !filter_var($data['guestId'], FILTER_VALIDATE_INT)) {
-    $response['message'] = 'ID Tamu tidak valid dari data scan.';
-    echo json_encode($response); exit();
+if (empty($guestId) || !is_numeric($guestId)) {
+    $response['message'] = 'Format QR Code tidak valid (ID tidak ditemukan).';
+    echo json_encode($response);
+    exit();
 }
 
-$guestId = (int)$data['guestId'];
-$statusHadir = "Hadir"; 
-$waktuScan = date('Y-m-d H:i:s');
-// $tanggal_sekarang = date('Y-m-d'); // Akan dihandle di proses_final_checkin
+// Ambil data master tamu dari kunjungan sebelumnya
+$sql = "SELECT id, nama, alamat, pekerjaan, no_telp FROM tamu WHERE id = ?";
+$stmt = mysqli_prepare($koneksi, $sql);
 
-mysqli_begin_transaction($koneksi);
-try {
-    // 1. Ambil Data Tamu & Cek Status Kehadiran
-    $sql_check = "SELECT id, nama, alamat, pekerjaan, no_telp, status_kehadiran FROM tamu WHERE id = ?";
-    $stmt_check = mysqli_prepare($koneksi, $sql_check);
-    if (!$stmt_check) throw new Exception("Gagal prepare check tamu: " . mysqli_error($koneksi));
-    mysqli_stmt_bind_param($stmt_check, "i", $guestId);
-    if (!mysqli_stmt_execute($stmt_check)) throw new Exception("Gagal execute check tamu: " . mysqli_stmt_error($stmt_check));
-    $resultCheck = mysqli_stmt_get_result($stmt_check);
-    $tamuData = mysqli_fetch_assoc($resultCheck);
-    mysqli_stmt_close($stmt_check);
+if ($stmt) {
+    mysqli_stmt_bind_param($stmt, "i", $guestId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $tamuData = mysqli_fetch_assoc($result);
 
-    if (!$tamuData) throw new Exception('ID Tamu (' . $guestId . ') tidak ditemukan.'); 
-    if ($tamuData['status_kehadiran'] == 'Hadir') throw new Exception('Tamu "' . htmlspecialchars($tamuData['nama']) . '" sudah tercatat HADIR sebelumnya.'); 
-
-    // 2. Update Status & Waktu Scan (JANGAN generate nomor antrian di sini)
-    $sql_update_status = "UPDATE tamu SET status_kehadiran = ?, waktu_scan_masuk = ? WHERE id = ?"; 
-    $stmt_update = mysqli_prepare($koneksi, $sql_update_status); 
-    if (!$stmt_update) throw new Exception("Gagal prepare update status: " . mysqli_error($koneksi));
-    mysqli_stmt_bind_param($stmt_update, "ssi", $statusHadir, $waktuScan, $guestId); 
-    if (!mysqli_stmt_execute($stmt_update)) throw new Exception("Gagal update status hadir: " . mysqli_stmt_error($stmt_update));
-    if (mysqli_stmt_affected_rows($stmt_update) <= 0) throw new Exception("Gagal update status (affected rows = 0).");
-    mysqli_stmt_close($stmt_update);
-
-    mysqli_commit($koneksi); 
-
-    $response['success'] = true;
-    $response['message'] = 'Data tamu ditemukan. Silakan lengkapi keperluan.';
-    // Kirim data tamu yang relevan untuk ditampilkan di modal konfirmasi
-    $response['tamuData'] = [
-        'id' => $tamuData['id'],
-        'nama' => $tamuData['nama'],
-        'alamat' => $tamuData['alamat'],
-        'pekerjaan' => $tamuData['pekerjaan'],
-        'no_telp' => $tamuData['no_telp']
-    ];
-
-} catch (Exception $e) {
-    mysqli_rollback($koneksi);
-    $response['message'] = $e->getMessage();
-    error_log("Error di proses_scan_public.php: " . $e->getMessage());
+    if ($tamuData) {
+        // Tandai kehadiran tamu dengan status 'Hadir' untuk kunjungan BARU ini
+        // Ini adalah langkah sementara sebelum data lengkapnya di-insert oleh proses_final_checkin
+        // Kita langsung kirimkan datanya ke modal
+        $response['success'] = true;
+        $response['message'] = 'Data tamu ditemukan. Silakan lengkapi keperluan.';
+        $response['tamuData'] = $tamuData;
+    } else {
+        $response['message'] = 'Data tamu dengan ID dari QR Code ini tidak ditemukan.';
+    }
+    mysqli_stmt_close($stmt);
+} else {
+    $response['message'] = 'Gagal menyiapkan query database.';
 }
 
 mysqli_close($koneksi);

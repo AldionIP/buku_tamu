@@ -4,15 +4,14 @@ require_once 'koneksi.php';
 
 // Opsi dropdown bisa ditaruh di sini atau diinclude dari file lain
 $opsi_keperluan = [
-    'Bertamu' => 'Bertamu', 'Belajar' => 'Belajar', 'Mitra' => 'Mitra', 
-    'Kolaborasi' => 'Kolaborasi', 'Meeting' => 'Meeting', 
-    'Mabar' => 'Mabar (Main Bareng)', 'Lainnya' => 'Lainnya'
+    'Koordinasi AntarInstansi' => 'Koordinasi AntarInstansi', 'Penawaran Kerja Sama' => 'Penawaran Kerja Sama', 'Pelayanan Statistik Terpadu' => 'Pelayanan Statistik Terpadu', 
+    'Rapat/Pertemuan' => 'Rapat/Pertemuan', 'Diskusi/Koordinasi Kegiatan Statistik' => 'Diskusi/Koordinasi Kegiatan Statistik', 
+    'Lainnya' => 'Lainnya'
 ];
 $opsi_pekerjaan = [
-    'Explaner' => 'Explaner', 'Goldlane' => 'Goldlane', 'Hyper' => 'Hyper', 
-    'Roamer' => 'Roamer', 'Jungler' => 'Jungler', 
-    'Pelajar/Mahasiswa' => 'Pelajar/Mahasiswa', 'Karyawan Swasta' => 'Karyawan Swasta',
-    'Wiraswasta' => 'Wiraswasta', 'PNS/ASN' => 'PNS/ASN', 'Lainnya' => 'Lainnya' 
+    'Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/Guru' => 'Pegawai/Guru', 'Mengurus Rumah Tangga' => 'Mengurus Rumah Tangga', 
+    'Mitra BPS' => 'Mitra BPS', 'Wiraswasta' => 'Wiraswasta', 
+    'Pelajar/Mahasiswa' => 'Pelajar/Mahasiswa', 'Lainnya' => 'Lainnya' 
 ];
 
 // Cek data popup dari session
