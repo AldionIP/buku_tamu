@@ -21,7 +21,7 @@ if (isset($_SESSION['popup_data_manual'])) {
     unset($_SESSION['popup_data_manual']); 
 }
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -232,7 +232,7 @@ if (isset($_SESSION['popup_data_manual'])) {
                     <div class="form-group"><label for="judul_pengaduan_idx">Judul/Ringkasan:</label><input type="text" id="judul_pengaduan_idx" name="judul_pengaduan" required></div>
                     <div class="form-group"><label for="detail_pengaduan_idx">Detail Pengaduan/Masukan:</label><textarea id="detail_pengaduan_idx" name="detail_pengaduan" rows="5" required></textarea></div>
                     <div class="form-group"><label for="lokasi_kejadian_idx">Lokasi Terkait (jika ada):</label><input type="text" id="lokasi_kejadian_idx" name="lokasi_kejadian"></div>
-                    <div class="form-group"><label for="lampiran_idx">Lampiran (Opsional, Max 2MB):</label><input type="file" id="lampiran_idx" name="lampiran"><small>JPG, PNG, PDF.</small></div>
+                    <div class="form-group"><label for="lampiran_idx">Lampiran (Opsional, Max 2MB):</label><input type="file" id="lampiran_idx" name="lampiran"><small>JPG, PNG, PDF, JPEG.</small></div>
                     <button type="submit" name="submit_pengaduan" class="btn btn-submit-public">Kirim Pengaduan/Masukan</button>
                 </form>
              </div>
