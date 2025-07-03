@@ -7,7 +7,7 @@ session_start(); // Untuk menampilkan pesan
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Isi Buku Tamu & Rating</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="desain_utama.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> </head>
 <body class="guest-body">
      <div class="container">

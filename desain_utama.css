@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Variabel Desain Baru */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --light-bg: #f4f7f9;
+    --dark-bg: #2c3e50;
+    --text-light: #ffffff;
+    --text-dark: #212529;
+    --text-muted: #adb5bd;
+    --font-family: 'Poppins', sans-serif;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+}
+
+/* Pengaturan Dasar */
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+* { box-sizing: border-box; }
+.main-content { flex: 1; padding: 50px 20px; }
+.container { max-width: 1140px; margin: 0 auto; padding: 0 15px; }
+
+/* Header & Footer Baru */
+.main-header {
+    background-color: var(--text-light);
+    padding: 1rem 2.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky; top: 0; z-index: 1020;
+}
+.main-header .logo-container { display: flex; align-items: center; gap: 15px; }
+.main-header .logo-container img { height: 45px; }
+.main-header .logo-container .logo-text { font-size: 1.25rem; font-weight: 600; color: var(--text-dark); text-decoration: none; }
+.main-header .header-nav { display: flex; align-items: center; gap: 30px; }
+.main-header .header-nav a { text-decoration: none; color: var(--secondary-color); font-weight: 500; transition: color 0.2s; }
+.main-header .header-nav a:hover, .main-header .header-nav a.active { color: var(--primary-color); }
+.main-header .header-nav .btn-login { background-color: var(--primary-color); color: var(--text-light); padding: 10px 20px; border-radius: 5px; }
+.main-header .header-nav .btn-login:hover { background-color: #0b5ed7; color: var(--text-light); }
+
+.main-footer {
+    background-color: #2c3e50;
+    color: var(--text-muted);
+    padding: 50px 0;
+    margin-top: auto;
+}
+.main-footer .footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; }
+.main-footer .footer-about, .main-footer .footer-contact { flex: 1; min-width: 300px; padding: 0 20px; }
+.main-footer .footer-about .logo-container { display: flex; align-items: center; margin-bottom: 20px; gap: 15px;}
+.main-footer .footer-about img { height: 60px; }
+.main-footer .footer-about .logo-text { color: var(--text-light); font-size: 1.3rem; font-weight: 500; line-height: 1.2;}
+.main-footer .footer-about .logo-text span { display: block; font-size: 0.8em; font-weight: 300; }
+.main-footer h3 { color: var(--text-light); margin-bottom: 20px; font-weight: 500; }
+.main-footer .footer-contact ul { list-style: none; padding: 0; margin: 0; }
+.main-footer .footer-contact li { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; }
+.main-footer .footer-contact li i { margin-top: 5px; width: 20px; text-align: center; color: var(--primary-color); }
+.main-footer .footer-copyright { text-align: center; margin-top: 40px; padding-top: 25px; border-top: 1px solid #4e5d6c; font-size: 0.9em; }
+
+/* Kartu Aksi di index.php */
+.action-chooser { display: flex; justify-content: center; gap: 40px; margin: 50px 0; text-align: center; flex-wrap: wrap; }
+.action-card { background-color: #fff; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); width: 350px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid #e9ecef; }
+.action-card:hover { transform: translateY(-10px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+.action-card i { font-size: 3.5rem; color: var(--primary-color); margin-bottom: 25px; }
+.action-card h3 { margin: 0 0 10px 0; font-size: 1.7rem; font-weight: 600; }
+.action-card p { font-size: 1rem; color: #555; line-height: 1.6; }
+
+/* Form Wrapper */
+.form-wrapper { max-width: 750px; margin: 20px auto; background-color: #fff; padding: 40px 50px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); }
+.form-wrapper h2 { text-align: center; margin-bottom: 30px; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 15px; }
+.form-group { margin-bottom: 25px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 15px; border: 1px solid #ced4da; border-radius: 6px; font-size: 1em; font-family: var(--font-family); }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25); }
+.form-group textarea { resize: vertical; min-height: 140px; }
+.btn-submit { background-color: var(--success-color); color: white; width: 100%; padding: 15px; font-size: 1.1rem; font-weight: 500; border-radius: 6px; }
+.btn-submit:hover { background-color: #157347; }
+.pesan { padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid transparent; }
+.pesan.sukses { background-color: #d1e7dd; color: #0f5132; }
+.pesan.error { background-color: #f8d7da; color: #842029; }
