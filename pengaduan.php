@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sampaikan Pengaduan - BPS Kota Bandar Lampung</title>
+    <title>Sampaikan Pengaduan - BADAN PUSAT SATISTIK KOTA BANDAR LAMPUNG</title>
     <link rel="stylesheet" href="desain_utama.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -15,7 +15,7 @@ session_start();
     <header class="main-header">
         <div class="logo-container">
             <a href="index.php"><img src="logo/logo.png" alt="Logo BPS"></a>
-            <a href="index.php" class="logo-text">BPS KOTA BANDAR LAMPUNG</a>
+            <a href="index.php" class="logo-text">BADAN PUSAT SATISTIK KOTA BANDAR LAMPUNG</a>
         </div>
         <nav class="header-nav">
             <a href="index.php">Buku Tamu</a>
@@ -53,7 +53,7 @@ session_start();
 
     <footer class="main-footer">
         <div class="container footer-content">
-            <div class="footer-about"><div class="logo-container"><img src="logo/logo.png" alt="Logo BPS"><span class="logo-text">Badan Pusat Statistik<span>Kota Bandar Lampung</span></span></div></div>
+            <div class="footer-about"><div class="logo-container"><img src="logo/logo.png" alt="Logo BPS"><span class="logo-text">BADAN PUSAT SATISTIK<span>KOTA BANDAR LAMPUNG</span></span></div></div>
             <div class="footer-contact">
                 <h3>Contact Information</h3>
                 <ul>
@@ -63,7 +63,7 @@ session_start();
                 </ul>
             </div>
         </div>
-        <div class="footer-copyright">&copy; <?php echo date("Y"); ?> BPS Kota Bandar Lampung. All Rights Reserved.</div>
+        <div class="footer-copyright">&copy; <?php echo date("Y"); ?> BADAN PUSAT SATISTIK KOTA BANDAR LAMPUNG. All Rights Reserved.</div>
     </footer>
 
 </body>

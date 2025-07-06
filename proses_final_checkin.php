@@ -76,7 +76,7 @@ function tampilkanHalamanHasil($data, $nomor_antrian, $tipe, $id_kunjungan_baru)
     <header class="main-header">
         <div class="logo-container">
             <a href="index.php"><img src="logo/bpslogo.png" alt="Logo BPS"></a>
-            <a href="index.php" class="logo-text">BPS KOTA BANDAR LAMPUNG</a>
+            <a href="index.php" class="logo-text">BADAN PUSAT SATISTIK KOTA BANDAR LAMPUNG</a>
         </div>
     </header>
 
@@ -93,11 +93,11 @@ function tampilkanHalamanHasil($data, $nomor_antrian, $tipe, $id_kunjungan_baru)
                 <strong>Nama:</strong> <?php echo htmlspecialchars($data['nama']); ?><br>
                 <strong>Email:</strong> <?php echo htmlspecialchars($data['email'] ?? '-'); ?><br>
                 <strong>No Hp:</strong> <?php echo htmlspecialchars($data['no_hp'] ?? '-'); ?>
-            </div>
-
+            </div><br>
+                    <a href="index.php" class="btn-kembali">Halaman Utama</a>
             <!-- <div class="btn-group">
                 <a href="cetak_antrian.php?id=<?php echo $id_kunjungan_baru; ?>" class="btn-download">Download No. Antrian</a>
-                <a href="index.php" class="btn-kembali">Halaman Utama</a>
+                
             </div> -->
         </div>
     </main>
