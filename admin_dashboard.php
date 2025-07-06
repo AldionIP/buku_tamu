@@ -16,7 +16,7 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dasbor Admin</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="desain_utama.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -820,7 +820,7 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
         <div class="modal-content"><span class="modal-close-btn">&times;</span>
             <h3>Edit Kunjungan Tamu</h3>
             <form id="editTamuForm" style="padding-top:15px;"><input type="hidden" name="id_tamu">
-                <div class="form-group"><label>ID Unik Sumber:</label><input type="text" name="master_id_sumber" readonly style="background:#e9ecef;"></div>
+                <div class="form-group"><label>ID</label><input type="text" name="master_id_sumber" readonly style="background:#e9ecef;"></div>
                 <div class="form-group"><label>Nama:</label><input type="text" name="nama" required></div>
                 <div class="form-group"><label>Email:</label><input type="email" name="email"></div>
                 <div class="form-group"><label>Alamat:</label><textarea name="alamat" rows="2"></textarea></div>
