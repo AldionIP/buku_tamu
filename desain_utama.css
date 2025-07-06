@@ -87,3 +87,24 @@ body {
 .pesan { padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid transparent; }
 .pesan.sukses { background-color: #d1e7dd; color: #0f5132; }
 .pesan.error { background-color: #f8d7da; color: #842029; }
+
+.rating-input {
+    display: flex;
+    flex-direction: row-reverse; /* Membuat bintang terbalik agar hover-nya benar */
+    justify-content: flex-start;
+}
+.rating-input input {
+    display: none; /* Sembunyikan tombol radio asli */
+}
+.rating-input label {
+    color: #ddd; /* Warna bintang mati */
+    font-size: 2em;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+/* Style saat bintang di-hover atau dipilih */
+.rating-input input:checked ~ label,
+.rating-input label:hover,
+.rating-input label:hover ~ label {
+    color: #f39c12; /* Warna bintang menyala */
+}

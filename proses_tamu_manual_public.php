@@ -102,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_manual'])) {
     $keperluan = trim($_POST['keperluan_manual'] ?? '');
     $pekerjaan = trim($_POST['pekerjaan_manual'] ?? '');
     $no_telp = trim($_POST['no_telp_manual'] ?? '');
+    $rating = isset($_POST['rating_manual']) && is_numeric($_POST['rating_manual']) ? intval($_POST['rating_manual']) : NULL;
     $waktu_sekarang = date('Y-m-d H:i:s');
     $tanggal_sekarang = date('Y-m-d');
 
@@ -110,10 +111,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_manual'])) {
     }
 
     try {
-        $sql = "INSERT INTO tamu (nama, email, alamat, keperluan, pekerjaan, no_telp, status_kehadiran, waktu_input, tanggal_antrian)
-                VALUES (?, ?, ?, ?, ?, ?, 'Hadir', ?, ?)";
+       $sql = "INSERT INTO tamu (nama, email, alamat, keperluan, pekerjaan, no_telp, status_kehadiran, rating, waktu_input, tanggal_antrian) VALUES (?, ?, ?, ?, ?, ?, 'Hadir', ?, ?, ?)";
         $stmt = mysqli_prepare($koneksi, $sql);
-        mysqli_stmt_bind_param($stmt, "ssssssss", $nama, $email, $alamat, $keperluan, $pekerjaan, $no_telp, $waktu_sekarang, $tanggal_sekarang);
+        mysqli_stmt_bind_param($stmt, "ssssssiss", $nama, $email, $alamat, $keperluan, $pekerjaan, $no_telp, $rating, $waktu_sekarang, $tanggal_sekarang);
         mysqli_stmt_execute($stmt);
         $last_id = mysqli_insert_id($koneksi);
 

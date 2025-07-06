@@ -7,7 +7,7 @@ if (!isset($_SESSION['id_petugas'])) {
 require_once 'koneksi.php';
 $page = $_GET['page'] ?? 'lihat_tamu';
 $opsi_keperluan = ['Koordinasi AntarInstansi' => 'Koordinasi AntarInstansi', 'Penawaran Kerja Sama' => 'Penawaran Kerja Sama', 'Pelayanan Statistik Terpadu' => 'Pelayanan Statistik Terpadu', 'Rapat/Pertemuan' => 'Rapat/Pertemuan', 'Diskusi/Koordinasi Kegiatan Statistik' => 'Diskusi/Koordinasi Kegiatan Statistik', 'Lainnya' => 'Lainnya'];
-$opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/Guru' => 'Pegawai/Guru', 'Mengurus Rumah Tangga' => 'Mengurus Rumah Tangga', 'Buruh ' => 'Buruh', 'Wiraswasta' => 'Wiraswasta', 'Pelajar/Mahasiswa' => 'Pelajar/Mahasiswa', 'Lainnya' => 'Lainnya'];
+$opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/Guru' => 'Pegawai/Guru', 'Mengurus Rumah Tangga' => 'Mengurus Rumah Tangga', 'Mitra BPS' => 'Mitra BPS', 'Wirausaha' => 'Wirausaha', 'Pelajar/Mahasiswa' => 'Pelajar/Mahasiswa', 'Honorer' => 'Honorer',  'Wiraswasta' => 'Wiraswasta',  'Freelance' => 'Freelance',  'Buruh' => 'Buruh',  'Lainnya' => 'Lainnya'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -642,112 +642,139 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
                             </table>
                         </div>
                     <?php
-                       case 'master_tamu':
-    // --- LOGIKA PENCARIAN BARU ---
-    $search_keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
-    $sql_master = "SELECT * FROM master_tamu";
-    if (!empty($search_keyword)) {
-        // Mencari berdasarkan nama saja
-        $sql_master .= " WHERE nama LIKE ?";
-    }
-    $sql_master .= " ORDER BY nama ASC";
-    
-    $stmt_master = mysqli_prepare($koneksi, $sql_master);
-    if (!empty($search_keyword)) {
-        $search_param = "%{$search_keyword}%";
-        mysqli_stmt_bind_param($stmt_master, "s", $search_param);
-    }
-    mysqli_stmt_execute($stmt_master);
-    $query_master = mysqli_stmt_get_result($stmt_master);
-    ?>
-    <h2><i class="fas fa-users"></i> Daftar Master Tamu</h2>
-    <div class="page-controls"><button type="button" class="btn btn-utama" id="btnTambahMaster"><i class="fas fa-plus"></i> Tambah Data Master</button></div>
+                    break;
+                    case 'master_tamu':
+                        // --- LOGIKA PENCARIAN BARU ---
+                        $search_keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+                        $sql_master = "SELECT * FROM master_tamu";
+                        if (!empty($search_keyword)) {
+                            // Mencari berdasarkan nama saja
+                            $sql_master .= " WHERE nama LIKE ?";
+                        }
+                        $sql_master .= " ORDER BY nama ASC";
 
-    <form method="GET" class="search-form" style="margin-bottom: 20px; display: flex; gap: 10px;">
-        <input type="hidden" name="page" value="master_tamu">
-        <input type="text" name="search" placeholder="Cari berdasarkan nama..." value="<?php echo htmlspecialchars($search_keyword); ?>" style="flex-grow: 1;">
-        <button type="submit" class="btn btn-secondary">Cari</button>
-    </form>
+                        $stmt_master = mysqli_prepare($koneksi, $sql_master);
+                        if (!empty($search_keyword)) {
+                            $search_param = "%{$search_keyword}%";
+                            mysqli_stmt_bind_param($stmt_master, "s", $search_param);
+                        }
+                        mysqli_stmt_execute($stmt_master);
+                        $query_master = mysqli_stmt_get_result($stmt_master);
+                    ?>
+                        <h2><i class="fas fa-users"></i> Daftar Master Tamu</h2>
+                        <div class="page-controls"><button type="button" class="btn btn-utama" id="btnTambahMaster"><i class="fas fa-plus"></i> Tambah Data Master</button></div>
 
-    <div class="table-responsive">
-        <table>
-            <thead><tr><th>ID</th><th>Nama</th><th>Email</th><th>No. HP</th><th>Pekerjaan</th><th>Aksi</th></tr></thead>
-            <tbody>
-                <?php if ($query_master && mysqli_num_rows($query_master) > 0): while($m = mysqli_fetch_assoc($query_master)): ?>
-                    <tr>
-                        <td><?php echo $m['id']; ?></td>
-                        <td><?php echo htmlspecialchars($m['nama']); ?></td>
-                        <td><?php echo htmlspecialchars($m['email'] ?? '-'); ?></td>
-                        <td><?php echo htmlspecialchars($m['no_hp'] ?? '-'); ?></td>
-                        <td><?php echo htmlspecialchars($m['pekerjaan'] ?? '-'); ?></td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary btn-view-qr" data-qrdata="ID Master Tamu: <?php echo $m['id']; ?>" data-namatamu="<?php echo htmlspecialchars($m['nama']); ?>"><i class="fas fa-qrcode"></i></button>
-                            <button type="button" class="btn btn-sm btn-warning btn-edit-master" data-id="<?php echo $m['id']; ?>" data-nama="<?php echo htmlspecialchars($m['nama']); ?>" data-email="<?php echo htmlspecialchars($m['email'] ?? ''); ?>" data-no_hp="<?php echo htmlspecialchars($m['no_hp'] ?? ''); ?>" data-alamat="<?php echo htmlspecialchars($m['alamat'] ?? ''); ?>" data-pekerjaan="<?php echo htmlspecialchars($m['pekerjaan'] ?? ''); ?>"><i class="fas fa-edit"></i></button>
-                            <form action="proses_hapus_master.php" method="post" style="display:inline;" onsubmit="return confirm('Hapus master tamu ini?');"><input type="hidden" name="id_master" value="<?php echo $m['id']; ?>"><button type="submit" name="hapus_master" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></form>
-                        </td>
-                    </tr>
-                <?php endwhile; else: ?>
-                    <tr><td colspan="6" align="center">Data tidak ditemukan.</td></tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
-    <?php
-    break;
+                        <form method="GET" class="search-form" style="margin-bottom: 20px; display: flex; gap: 10px;">
+                            <input type="hidden" name="page" value="master_tamu">
+                            <input type="text" name="search" placeholder="Cari berdasarkan nama..." value="<?php echo htmlspecialchars($search_keyword); ?>" style="flex-grow: 1;">
+                            <button type="submit" class="btn btn-secondary">Cari</button>
+                        </form>
+
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>No. HP</th>
+                                        <th>Pekerjaan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if ($query_master && mysqli_num_rows($query_master) > 0): while ($m = mysqli_fetch_assoc($query_master)): ?>
+                                            <tr>
+                                                <td><?php echo $m['id']; ?></td>
+                                                <td><?php echo htmlspecialchars($m['nama']); ?></td>
+                                                <td><?php echo htmlspecialchars($m['email'] ?? '-'); ?></td>
+                                                <td><?php echo htmlspecialchars($m['no_hp'] ?? '-'); ?></td>
+                                                <td><?php echo htmlspecialchars($m['pekerjaan'] ?? '-'); ?></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-secondary btn-view-qr" data-qrdata="ID Master Tamu: <?php echo $m['id']; ?>" data-namatamu="<?php echo htmlspecialchars($m['nama']); ?>"><i class="fas fa-qrcode"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-warning btn-edit-master" data-id="<?php echo $m['id']; ?>" data-nama="<?php echo htmlspecialchars($m['nama']); ?>" data-email="<?php echo htmlspecialchars($m['email'] ?? ''); ?>" data-no_hp="<?php echo htmlspecialchars($m['no_hp'] ?? ''); ?>" data-alamat="<?php echo htmlspecialchars($m['alamat'] ?? ''); ?>" data-pekerjaan="<?php echo htmlspecialchars($m['pekerjaan'] ?? ''); ?>"><i class="fas fa-edit"></i></button>
+                                                    <form action="proses_hapus_master.php" method="post" style="display:inline;" onsubmit="return confirm('Hapus master tamu ini?');"><input type="hidden" name="id_master" value="<?php echo $m['id']; ?>"><button type="submit" name="hapus_master" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></form>
+                                                </td>
+                                            </tr>
+                                        <?php endwhile;
+                                    else: ?>
+                                        <tr>
+                                            <td colspan="6" align="center">Data tidak ditemukan.</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php
+                        break;
 
                     case 'lihat_tamu':
-default:
-    // --- LOGIKA PENCARIAN BERDASARKAN NAMA ---
-    $search_keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
-    $sql_tamu = "SELECT * FROM tamu";
-    if (!empty($search_keyword)) {
-        $sql_tamu .= " WHERE nama LIKE ?";
-    }
-    $sql_tamu .= " ORDER BY waktu_input DESC";
+                    default:
+                        // --- LOGIKA PENCARIAN BERDASARKAN NAMA ---
+                        $search_keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+                        $sql_tamu = "SELECT * FROM tamu";
+                        if (!empty($search_keyword)) {
+                            $sql_tamu .= " WHERE nama LIKE ?";
+                        }
+                        $sql_tamu .= " ORDER BY waktu_input DESC";
 
-    $stmt_tamu = mysqli_prepare($koneksi, $sql_tamu);
-    if (!empty($search_keyword)) {
-        $search_param = "%{$search_keyword}%";
-        mysqli_stmt_bind_param($stmt_tamu, "s", $search_param);
-    }
-    mysqli_stmt_execute($stmt_tamu);
-    $query_tamu = mysqli_stmt_get_result($stmt_tamu);
-    ?>
-    <h2><i class="fas fa-list-alt"></i> Daftar Kunjungan Tamu</h2>
-    
-    <form method="GET" class="search-form" style="margin-bottom: 20px; display: flex; gap: 10px;">
-        <input type="hidden" name="page" value="lihat_tamu">
-        <input type="text" name="search" placeholder="Cari berdasarkan nama..." value="<?php echo htmlspecialchars($search_keyword); ?>" style="flex-grow: 1;">
-        <button type="submit" class="btn btn-secondary">Cari</button>
-    </form>
+                        $stmt_tamu = mysqli_prepare($koneksi, $sql_tamu);
+                        if (!empty($search_keyword)) {
+                            $search_param = "%{$search_keyword}%";
+                            mysqli_stmt_bind_param($stmt_tamu, "s", $search_param);
+                        }
+                        mysqli_stmt_execute($stmt_tamu);
+                        $query_tamu = mysqli_stmt_get_result($stmt_tamu);
+                    ?>
+                        <h2><i class="fas fa-list-alt"></i> Daftar Kunjungan Tamu</h2>
 
-    <div class="table-responsive">
-        <table>
-            <thead><tr><th>ID</th><th>Nama</th><th>No Antrian</th><th>Email</th><th>Keperluan</th><th>Pekerjaan</th><th>Waktu</th><th>Aksi</th></tr></thead>
-            <tbody>
-                <?php if ($query_tamu && mysqli_num_rows($query_tamu) > 0): while($t = mysqli_fetch_assoc($query_tamu)): ?>
-                    <tr>
-                        <td><?php echo $t['id']; ?></td>
-                        <td><?php echo htmlspecialchars($t['nama']); ?></td>
-                        <td align="center" style="font-weight:bold;"><?php echo $t['no_antrian_hari_ini'] ?? '-'; ?></td>
-                        <td><?php echo htmlspecialchars($t['email'] ?? '-'); ?></td>
-                        <td><?php echo htmlspecialchars($t['keperluan'] ?? '-'); ?></td>
-                        <td><?php echo htmlspecialchars($t['pekerjaan'] ?? '-'); ?></td>
-                        <td><?php echo date('d/m/Y H:i', strtotime($t['waktu_input'])); ?></td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary btn-view-qr" data-qrdata="ID Tamu: <?php echo $t['id']; ?>" data-namatamu="<?php echo htmlspecialchars($t['nama']); ?>"><i class="fas fa-qrcode"></i></button>
-                            <button type="button" class="btn btn-sm btn-warning btn-edit-tamu" data-id="<?php echo $t['id']; ?>" data-master_id_sumber="<?php echo htmlspecialchars($t['master_id_sumber'] ?? ''); ?>" data-nama="<?php echo htmlspecialchars($t['nama']); ?>" data-email="<?php echo htmlspecialchars($t['email'] ?? ''); ?>" data-alamat="<?php echo htmlspecialchars($t['alamat'] ?? ''); ?>" data-keperluan="<?php echo htmlspecialchars($t['keperluan'] ?? ''); ?>" data-pekerjaan="<?php echo htmlspecialchars($t['pekerjaan'] ?? ''); ?>" data-no_telp="<?php echo htmlspecialchars($t['no_telp'] ?? ''); ?>"><i class="fas fa-edit"></i></button>
-                            <form action="hapus_tamu.php" method="post" style="display:inline;" onsubmit="return confirm('Hapus data kunjungan ini?');"><input type="hidden" name="id_tamu" value="<?php echo $t['id']; ?>"><button type="submit" name="hapus" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></form>
-                        </td>
-                    </tr>
-                <?php endwhile; else: ?>
-                    <tr><td colspan="8" align="center">Data tidak ditemukan.</td></tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
-    <?php
-    break;
+                        <form method="GET" class="search-form" style="margin-bottom: 20px; display: flex; gap: 10px;">
+                            <input type="hidden" name="page" value="lihat_tamu">
+                            <input type="text" name="search" placeholder="Cari berdasarkan nama..." value="<?php echo htmlspecialchars($search_keyword); ?>" style="flex-grow: 1;">
+                            <button type="submit" class="btn btn-secondary">Cari</button>
+                        </form>
+
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nama</th>
+                                        <th>No Antrian</th>
+                                        <th>Email</th>
+                                        <th>Keperluan</th>
+                                        <th>Pekerjaan</th>
+                                        <th>Waktu</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if ($query_tamu && mysqli_num_rows($query_tamu) > 0): while ($t = mysqli_fetch_assoc($query_tamu)): ?>
+                                            <tr>
+                                                <td><?php echo $t['id']; ?></td>
+                                                <td><?php echo htmlspecialchars($t['nama']); ?></td>
+                                                <td align="center" style="font-weight:bold;"><?php echo $t['no_antrian_hari_ini'] ?? '-'; ?></td>
+                                                <td><?php echo htmlspecialchars($t['email'] ?? '-'); ?></td>
+                                                <td><?php echo htmlspecialchars($t['keperluan'] ?? '-'); ?></td>
+                                                <td><?php echo htmlspecialchars($t['pekerjaan'] ?? '-'); ?></td>
+                                                <td><?php echo date('d/m/Y H:i', strtotime($t['waktu_input'])); ?></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-secondary btn-view-qr" data-qrdata="ID Tamu: <?php echo $t['id']; ?>" data-namatamu="<?php echo htmlspecialchars($t['nama']); ?>"><i class="fas fa-qrcode"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-warning btn-edit-tamu" data-id="<?php echo $t['id']; ?>" data-master_id_sumber="<?php echo htmlspecialchars($t['master_id_sumber'] ?? ''); ?>" data-nama="<?php echo htmlspecialchars($t['nama']); ?>" data-email="<?php echo htmlspecialchars($t['email'] ?? ''); ?>" data-alamat="<?php echo htmlspecialchars($t['alamat'] ?? ''); ?>" data-keperluan="<?php echo htmlspecialchars($t['keperluan'] ?? ''); ?>" data-pekerjaan="<?php echo htmlspecialchars($t['pekerjaan'] ?? ''); ?>" data-no_telp="<?php echo htmlspecialchars($t['no_telp'] ?? ''); ?>"><i class="fas fa-edit"></i></button>
+                                                    <form action="hapus_tamu.php" method="post" style="display:inline;" onsubmit="return confirm('Hapus data kunjungan ini?');"><input type="hidden" name="id_tamu" value="<?php echo $t['id']; ?>"><button type="submit" name="hapus" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></form>
+                                                </td>
+                                            </tr>
+                                        <?php endwhile;
+                                    else: ?>
+                                        <tr>
+                                            <td colspan="8" align="center">Data tidak ditemukan.</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                <?php
+                        break;
                 }
                 ?>
             </div>

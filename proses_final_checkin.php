@@ -12,7 +12,7 @@ function tampilkanHalamanHasil($data, $nomor_antrian, $tipe, $id_kunjungan_baru)
     <head>
         <meta charset="UTF-8">
         <title>Check-in Berhasil</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="desain_utama.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
             .result-container {

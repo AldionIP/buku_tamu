@@ -2,7 +2,7 @@
 session_start();
 require_once 'koneksi.php';
 $opsi_keperluan = ['Koordinasi AntarInstansi' => 'Koordinasi AntarInstansi', 'Penawaran Kerja Sama' => 'Penawaran Kerja Sama', 'Pelayanan Statistik Terpadu' => 'Pelayanan Statistik Terpadu', 'Rapat/Pertemuan' => 'Rapat/Pertemuan', 'Diskusi/Koordinasi Kegiatan Statistik' => 'Diskusi/Koordinasi Kegiatan Statistik', 'Lainnya' => 'Lainnya'];
-$opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/Guru' => 'Pegawai/Guru', 'Mengurus Rumah Tangga' => 'Mengurus Rumah Tangga', 'Mitra BPS' => 'Mitra BPS', 'Wiraswasta' => 'Wiraswasta', 'Pelajar/Mahasiswa' => 'Pelajar/Mahasiswa', 'Lainnya' => 'Lainnya'];
+$opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/Guru' => 'Pegawai/Guru', 'Mengurus Rumah Tangga' => 'Mengurus Rumah Tangga', 'Mitra BPS' => 'Mitra BPS', 'Wirausaha' => 'Wirausaha', 'Pelajar/Mahasiswa' => 'Pelajar/Mahasiswa', 'Honorer' => 'Honorer',  'Wiraswasta' => 'Wiraswasta',  'Freelance' => 'Freelance',  'Buruh' => 'Buruh',  'Lainnya' => 'Lainnya'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -10,6 +10,7 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buku Tamu Digital - BPS Kota Bandar Lampung</title>
+    <link rel="stylesheet" href="desain_utama.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     
@@ -98,7 +99,17 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
                     <div class="form-group"><label>Keperluan:</label><select name="keperluan_manual" required><option value="">-- Pilih --</option><?php foreach ($opsi_keperluan as $v => $t) echo "<option value='".htmlspecialchars($v)."'>".htmlspecialchars($t)."</option>"; ?></select></div>
                     <div class="form-group"><label>Pekerjaan:</label><select name="pekerjaan_manual"><option value="">-- Pilih --</option><?php foreach ($opsi_pekerjaan as $v => $t) echo "<option value='".htmlspecialchars($v)."'>".htmlspecialchars($t)."</option>"; ?></select></div>
                     <div class="form-group"><label>No. Telepon:</label><input type="text" name="no_telp_manual"></div>
-                    
+                    <div class="form-group">
+   <div class="form-group">
+    <label>Rating Pelayanan (Opsional):</label>
+    <div class="rating-input">
+        <input type="radio" id="manual_star5" name="rating_manual" value="5"><label for="manual_star5" title="Sangat Puas"><i class="fas fa-star"></i></label>
+        <input type="radio" id="manual_star4" name="rating_manual" value="4"><label for="manual_star4" title="Puas"><i class="fas fa-star"></i></label>
+        <input type="radio" id="manual_star3" name="rating_manual" value="3"><label for="manual_star3" title="Cukup Puas"><i class="fas fa-star"></i></label>
+        <input type="radio" id="manual_star2" name="rating_manual" value="2"><label for="manual_star2" title="Kurang Puas"><i class="fas fa-star"></i></label>
+        <input type="radio" id="manual_star1" name="rating_manual" value="1"><label for="manual_star1" title="Tidak Puas"><i class="fas fa-star"></i></label>
+    </div>
+</div>
                     <button type="submit" name="submit_manual" class="btn btn-submit">Kirim & Dapatkan Antrian</button>
                 </form>
             </div>
