@@ -787,7 +787,8 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
         <div class="modal-content"><span class="modal-close-btn">&times;</span>
             <h3>Tambah Data Master</h3>
             <form action="proses_input_master.php" method="post" style="padding-top:15px;">
-                <div class="form-group"><label>ID</label><input type="number" name="id" required></div>
+                <!-- <div class="form-group"><label>ID</label><input type="number" name="id" required></div> -->
+                <div class="form-group"><label>ID Unik:</label><input type="text" name="Bpd_id" required></div>
                 <div class="form-group"><label>Nama:</label><input type="text" name="nama" required></div>
                 <div class="form-group"><label>Email:</label><input type="email" name="email"></div>
                 <div class="form-group"><label>No. HP:</label><input type="text" name="no_hp"></div>

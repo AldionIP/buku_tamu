@@ -9,6 +9,7 @@ if (!isset($_SESSION['id_petugas'])) {
 
 if (isset($_POST['submit_master'])) {
     // ID tidak lagi diambil dari form
+    $Bpd_id = trim($_POST['Bpd_id'] ?? '');
     $nama = trim($_POST['nama'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $no_hp = trim($_POST['no_hp'] ?? '');
@@ -25,12 +26,12 @@ if (isset($_POST['submit_master'])) {
     }
 
     // Query INSERT sekarang tanpa kolom 'id'
-    $sql = "INSERT INTO master_tamu (nama, email, no_hp, alamat, pekerjaan, rating) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO master_tamu (Bpd_id, nama, email, no_hp, alamat, pekerjaan, rating) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt_insert = mysqli_prepare($koneksi, $sql);
     
     if ($stmt_insert) {
         // bind_param sekarang tanpa 'i' untuk id
-        mysqli_stmt_bind_param($stmt_insert, "sssssi", $nama, $email, $no_hp, $alamat, $pekerjaan, $rating);
+        mysqli_stmt_bind_param($stmt_insert, "ssssssi", $Bpd_id, $nama, $email, $no_hp, $alamat, $pekerjaan, $rating);
         
         if (mysqli_stmt_execute($stmt_insert)) {
             $_SESSION['admin_message'] = "Data master tamu untuk '".htmlspecialchars($nama)."' berhasil ditambahkan.";

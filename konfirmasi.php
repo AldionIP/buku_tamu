@@ -64,7 +64,10 @@ $opsi_keperluan = ['Koordinasi AntarInstansi' => 'Koordinasi AntarInstansi', 'Pe
                     <h2><i class="fas fa-user-check"></i> Konfirmasi Kunjungan</h2>
                      <div style="margin-bottom:20px;background:#f5f5f5;padding:15px;border-radius:5px;line-height:1.6;">
                         <strong>Nama:</strong> <?php echo htmlspecialchars($data['nama']); ?><br>
-                        <strong>Pekerjaan:</strong> <?php echo htmlspecialchars($data['pekerjaan'] ?? '-'); ?>
+                        <strong>ID unik:</strong> <?php echo htmlspecialchars($data['Bpd_id']); ?><br>
+                        <strong>Alamat:</strong> <?php echo htmlspecialchars($data['alamat']); ?><br>
+                        <strong>No Hp:</strong> <?php echo htmlspecialchars($data['no_hp']); ?><br>
+                        <strong>Email:</strong> <?php echo htmlspecialchars($data['email'] ?? '-'); ?>
                     </div>
                     <form action="proses_final_checkin.php" method="post">
                         <input type="hidden" name="guestId" value="<?php echo htmlspecialchars($data['id']); ?>">
@@ -75,7 +78,7 @@ $opsi_keperluan = ['Koordinasi AntarInstansi' => 'Koordinasi AntarInstansi', 'Pe
                             <select name="keperluan" required><option value="">-- Pilih --</option><?php foreach ($opsi_keperluan as $v => $t) echo "<option value='".htmlspecialchars($v)."'>".htmlspecialchars($t)."</option>"; ?></select>
                         </div>
                         <div class="form-group">
-                            <label>Rating Pelayanan (Opsional):</label>
+                            <label>Rating Pelayanan:</label>
                             <select name="rating"><option value="">-- Beri Rating --</option><option value="5">5 Bintang</option><option value="4">4 Bintang</option><option value="3">3 Bintang</option><option value="2">2 Bintang</option><option value="1">1 Bintang</option></select>
                         </div>
                         <button type="submit" class="btn btn-submit">Simpan Kunjungan & Dapatkan Antrian</button>
