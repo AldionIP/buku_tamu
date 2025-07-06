@@ -674,7 +674,8 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        
+                                        <th>ID_unik</th>
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>No. HP</th>
@@ -685,14 +686,15 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
                                 <tbody>
                                     <?php if ($query_master && mysqli_num_rows($query_master) > 0): while ($m = mysqli_fetch_assoc($query_master)): ?>
                                             <tr>
-                                                <td><?php echo $m['id']; ?></td>
+                                                
+                                                <td><?php echo htmlspecialchars($m['Bpd_id'] ?? '-'); ?></td>
                                                 <td><?php echo htmlspecialchars($m['nama']); ?></td>
                                                 <td><?php echo htmlspecialchars($m['email'] ?? '-'); ?></td>
                                                 <td><?php echo htmlspecialchars($m['no_hp'] ?? '-'); ?></td>
                                                 <td><?php echo htmlspecialchars($m['pekerjaan'] ?? '-'); ?></td>
                                                 <td>
                                                     <button type="button" class="btn btn-sm btn-secondary btn-view-qr" data-qrdata="ID Master Tamu: <?php echo $m['id']; ?>" data-namatamu="<?php echo htmlspecialchars($m['nama']); ?>"><i class="fas fa-qrcode"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-warning btn-edit-master" data-id="<?php echo $m['id']; ?>" data-nama="<?php echo htmlspecialchars($m['nama']); ?>" data-email="<?php echo htmlspecialchars($m['email'] ?? ''); ?>" data-no_hp="<?php echo htmlspecialchars($m['no_hp'] ?? ''); ?>" data-alamat="<?php echo htmlspecialchars($m['alamat'] ?? ''); ?>" data-pekerjaan="<?php echo htmlspecialchars($m['pekerjaan'] ?? ''); ?>"><i class="fas fa-edit"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-warning btn-edit-master" data-id="<?php echo $m['id'];?>" data-bpd_id="<?php echo htmlspecialchars($m['Bpd_id']??'');?>" data-nama="<?php echo htmlspecialchars($m['nama']);?>" data-email="<?php echo htmlspecialchars($m['email']??'');?>" data-no_hp="<?php echo htmlspecialchars($m['no_hp']??'');?>" data-alamat="<?php echo htmlspecialchars($m['alamat']??'');?>" data-pekerjaan="<?php echo htmlspecialchars($m['pekerjaan']??'');?>"><i class="fas fa-edit"></i></button>
                                                     <form action="proses_hapus_master.php" method="post" style="display:inline;" onsubmit="return confirm('Hapus master tamu ini?');"><input type="hidden" name="id_master" value="<?php echo $m['id']; ?>"><button type="submit" name="hapus_master" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></form>
                                                 </td>
                                             </tr>
@@ -804,6 +806,10 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
         <div class="modal-content"><span class="modal-close-btn">&times;</span>
             <h3>Edit Data Master</h3>
             <form id="editMasterForm" style="padding-top:15px;"><input type="hidden" name="id">
+            <div class="form-group">
+    <label>ID_unik:</label>
+    <input type="text" name="Bpd_id">
+</div>
                 <div class="form-group"><label>Nama:</label><input type="text" name="nama" required></div>
                 <div class="form-group"><label>Email:</label><input type="email" name="email"></div>
                 <div class="form-group"><label>No. HP:</label><input type="text" name="no_hp"></div>

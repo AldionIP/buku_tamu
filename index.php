@@ -72,7 +72,7 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
     <header class="main-header">
         <div class="logo-container">
             <a href="index.php"><img src="logo/logo.png" alt="Logo BPS"></a>
-            <a href="index.php" class="logo-text">BPS KOTA BANDAR LAMPUNG</a>
+            <a href="index.php" class="logo-text">BADAN PUSAT STATISTIK KOTA BANDAR LAMPUNG</a>
         </div>
         <nav class="header-nav">
             <a href="index.php" class="active">Buku Tamu</a>
@@ -122,10 +122,10 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
 
     <footer class="main-footer">
         <div class="container footer-content">
-            <div class="footer-about"><div class="logo-container"><img src="logo/logo.png" alt="Logo BPS"><span class="logo-text">Badan Pusat Statistik<span>Kota Bandar Lampung</span></span></div></div>
+            <div class="footer-about"><div class="logo-container"><img src="logo/logo.png" alt="Logo BPS"><span class="logo-text">BADAN PUSAT STATISTIK<span>KOTA BANDAR LAMPUNG</span></span></div></div>
             <div class="footer-contact"><h3>Contact Information</h3><ul><li><i class="fas fa-phone"></i> (0721) 255980</li><li><i class="fas fa-envelope"></i> bps1800@bps.go.id</li><li><i class="fas fa-map-marker-alt"></i> Jl. Sultan Syahril No.30, Pahoman, Engal, Kota Bandar Lampung</li></ul></div>
         </div>
-        <div class="footer-copyright">&copy; <?php echo date("Y"); ?> BPS Kota Bandar Lampung. All Rights Reserved.</div>
+        <div class="footer-copyright">&copy; <?php echo date("Y"); ?> BADAN PUSAT STATISTIK KOTA BANDAR LAMPUNG. All Rights Reserved.</div>
     </footer>
 
     <script>

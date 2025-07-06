@@ -88,16 +88,17 @@ function tampilkanHalamanHasil($data, $nomor_antrian, $tipe, $id_kunjungan_baru)
 
             <div class="detail-info">
                 <?php if ($tipe === 'master'): ?>
-                    <strong>ID Unik:</strong> <?php echo htmlspecialchars($data['id']); ?><br>
+                    <strong>ID Unik:</strong> <?php echo htmlspecialchars($data['Bpd_id']); ?><br>
                 <?php endif; ?>
                 <strong>Nama:</strong> <?php echo htmlspecialchars($data['nama']); ?><br>
-                <strong>Email:</strong> <?php echo htmlspecialchars($data['email'] ?? '-'); ?>
+                <strong>Email:</strong> <?php echo htmlspecialchars($data['email'] ?? '-'); ?><br>
+                <strong>No Hp:</strong> <?php echo htmlspecialchars($data['no_hp'] ?? '-'); ?>
             </div>
 
-            <div class="btn-group">
+            <!-- <div class="btn-group">
                 <a href="cetak_antrian.php?id=<?php echo $id_kunjungan_baru; ?>" class="btn-download">Download No. Antrian</a>
                 <a href="index.php" class="btn-kembali">Halaman Utama</a>
-            </div>
+            </div> -->
         </div>
     </main>
 
