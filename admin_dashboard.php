@@ -15,7 +15,7 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dasbor Admin</title>
+    <title>DashboardAdmin</title>
     <link rel="stylesheet" href="desain_utama.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -785,7 +785,7 @@ $opsi_pekerjaan = ['Aparat Desa/Kelurahan' => 'Aparat Desa/Kelurahan', 'Pegawai/
         <div class="modal-content"><span class="modal-close-btn">&times;</span>
             <h3>Tambah Data Master</h3>
             <form action="proses_input_master.php" method="post" style="padding-top:15px;">
-                <div class="form-group"><label>ID Unik:</label><input type="number" name="id" required></div>
+                <div class="form-group"><label>ID</label><input type="number" name="id" required></div>
                 <div class="form-group"><label>Nama:</label><input type="text" name="nama" required></div>
                 <div class="form-group"><label>Email:</label><input type="email" name="email"></div>
                 <div class="form-group"><label>No. HP:</label><input type="text" name="no_hp"></div>
